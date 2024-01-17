@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1000,
+    "status": "ingesting"
+  },
+  {
+    "id": 1001,
+    "status": "complete",
+    "assets": [
+      "https://urthecast-updev-jcheung-sandbox.s3.amazonaws.com/sdet-takehome-assignment/eda-sample-catalog.png",
+      "https://urthecast-updev-jcheung-sandbox.s3.amazonaws.com/sdet-takehome-assignment/eda-sample-catalog-metadata.json"
+    ]
+  },
+  {
+    "id": 1002,
+    "status": "complete",
+    "assets": [
+      "https://urthecast-updev-jcheung-sandbox.s3.amazonaws.com/sdet-takehome-assignment/eda-sample-catalog.png",
+      "https://urthecast-updev-jcheung-sandbox.s3.amazonaws.com/sdet-takehome-assignment/eda-sample-catalog-metadata.json"
+    ]
+  },
+  {
+    "id": 1003,
+    "status": "ingesting"
+  },
+  {
+    "id": 2000,
+    "status": "failed"
+  }
+]

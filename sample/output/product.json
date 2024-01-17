@@ -1,0 +1,16 @@
+[
+  {
+    "id": 10001,
+    "input_id": 1001,
+    "status": "processing"
+  },
+  {
+    "id": 10002,
+    "input_id": 1002,
+    "status": "complete",
+    "assets": [
+      "https://urthecast-updev-jcheung-sandbox.s3.amazonaws.com/sdet-takehome-assignment/eda-sample-product.png",
+      "https://urthecast-updev-jcheung-sandbox.s3.amazonaws.com/sdet-takehome-assignment/eda-sample-product-metadata.json"
+    ]
+  }
+]

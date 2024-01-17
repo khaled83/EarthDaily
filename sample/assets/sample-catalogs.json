@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": 1000,
+      "type": "sample-catalog",
+      "image": "eda-sample-catalog-1000.png"
+    },
+    {
+      "id": 1001,
+      "type": "sample-catalog",
+      "image": "eda-sample-catalog-1001.png"
+    },
+    {
+      "id": 1002,
+      "type": "sample-catalog",
+      "image": "eda-sample-catalog-1002.png"
+    },
+    {
+      "id": 1003,
+      "type": "sample-catalog",
+      "image": "eda-sample-catalog-1003.png"
+    },
+    {
+      "id": 2000,
+      "type": "sample-catalog"
+    }
+  ]
+}
