@@ -1,6 +1,7 @@
 import os
 import configparser
 import json
+import time
 
 import boto3
 from unittest import TestCase
@@ -35,6 +36,7 @@ class FunctionalE2ETest(TestCase):
         self.expected_complete = [int(num) for num in self.config['Expected']['Complete'].split(',')]
         self.expected_ingesting = [int(num) for num in self.config['Expected']['Ingesting'].split(',')]
         self.expected_failed = [int(num) for num in self.config['Expected']['failed'].split(',')]
+        self.max_minutes = int(self.config['Expected']['MaxMinutes'])
         # read sample catalog
         self.sample_catalog = self.read_assets_metadata()['data']
         # read output catalog
@@ -131,3 +133,30 @@ class FunctionalE2ETest(TestCase):
                 catalog_image = extract_metadata_asset(catalog_map.get(product['input_id'])['assets'])
                 self.assertEqual(product_image.removesuffix('-product-metadata.json'),
                                  catalog_image.removesuffix('-catalog-metadata.json'))
+
+    def test_e2d_time(self):
+        bucket: str = self.config['Assets']['BucketName']
+        key: str = self.config['Assets']['BucketKey']
+        try:
+            response = s3.get_object(Bucket=bucket, Key=key)
+            metadata = json.load(response['Body'])
+            # clean up files in inputs
+            bucket: str = self.config['Inputs']['BucketName']
+            key: str = self.config['Inputs']['BucketKey']
+            prefix: str = self.config['Inputs']['Prefix']
+            last_modified_time = time.mktime(time.gmtime())
+            for catalog in metadata['data']:
+                catalog_id: int = catalog['id']
+                key: str = f'{prefix}/sample-catalog-{catalog_id}.json'
+                response = s3.get_object(Bucket=bucket, Key=key)
+                last_modified_str: str = response['ResponseMetadata']['HTTPHeaders']['last-modified']
+                cur_last_modified_time = time.mktime(time.strptime(last_modified_str, '%a, %d %b %Y %H:%M:%S %Z'))
+                last_modified_time = min(last_modified_time, cur_last_modified_time)
+                time_now = time.mktime(time.gmtime())
+                minutes_passed = (time_now - last_modified_time) / 60
+                self.assertLessEqual(minutes_passed, self.max_minutes)
+        except Exception as e:
+            print(e)
+            print('Error while measuring e2e time')
+            raise e
+
